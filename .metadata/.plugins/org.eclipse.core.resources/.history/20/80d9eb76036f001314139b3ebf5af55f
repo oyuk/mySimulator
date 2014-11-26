@@ -1,0 +1,70 @@
+
+public class Field {
+
+	//シングルトンクラス
+	private static Field instance = new Field();
+	private Field(){}
+	public static Field getInstance(){
+		return instance;
+	}
+
+	MAG mag[][];
+	int pa_num;
+	int temp;
+
+
+	void initField(){
+
+		mag = new MAG[Main.fieldx][Main.fieldy];
+		pa_num = 0;
+
+		for(int i=0;i<Main.fieldx;i++){
+
+			//System.out.print(i+" % "+Main.pa_fieldy+"="+i%Main.pa_fieldy);
+
+			temp = Main.pa_column*(i/Main.pa_fieldy);
+
+			if(i % Main.pa_fieldy == 0 && temp > 0){
+				pa_num = temp;
+			}
+
+
+			//System.out.println(" pa_num:"+pa_num+"   temp:"+temp);
+			for(int j=0;j<Main.fieldy;j++){
+
+				if(j % Main.pa_fieldx == 0){
+					pa_num++;
+				}
+
+				mag[i][j] = new MAG(i,j,pa_num);
+
+			}
+
+			pa_num = temp;
+		}
+	}
+
+	//MNをMAGへ登録
+	int reg_mag(int x,int y,int id,int pa_num,boolean active){
+		return mag[x][y].reg_mn(id,pa_num,active);
+	}
+	//MAGからMNを削除
+	void del_mag(int x,int y,int id){
+		mag[x][y].del_mn(id);
+	}
+
+	int initial_mn_reg(int x,int y,int id){
+		return mag[x][y].first_reg_mn(id);
+	}
+
+	void print(){
+		for(int i=0;i<Main.fieldx;i++){
+			for(int j=0;j<Main.fieldy;j++){
+
+				if(mag[i][j].cost>0)mag[i][j].state();
+//				mag[i][j].state();
+			}
+		}
+	}
+
+}

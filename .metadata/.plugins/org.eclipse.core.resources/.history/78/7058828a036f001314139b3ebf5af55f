@@ -1,0 +1,45 @@
+
+//MN.javaで移動していなくてもcostが追加される。
+//sessionが来た時の通信時間の判定
+
+
+public class Main {
+
+	//フィールドの範囲
+	final static int fieldx = 12;
+	final static int fieldy = 12;
+	//ページングエリアの範囲
+	final static int pa_fieldx = 3;
+	final static int pa_fieldy = 3;
+
+	final static int pa_row = fieldx/pa_fieldx;//ページングエリアの行数
+	final static int pa_column = fieldy/pa_fieldy;//ページングエリアの列数
+	//シミュレーション時間
+	final static double SimuTime = 10;
+	final static double refresh_rate = 0.1;
+	//MNの数
+	final static int nodeNum = 2;
+	//MNがMAGにいる時間
+	final static int mn_mag_stay_time[] = {1,2,3,4,5,300};
+	//C_*の変数はコストを表す
+	final static int C_MAG_LMA = 5;
+	final static int C_MN_MAG = 1;
+    static int total_cost = 0;
+
+	//LMA
+	final static int lambda = 3;
+	final static int per_unit_time = 50;
+
+	final static int active_rate = 0;//active nodeの割合
+	final static int mn_move_prob = 100;//mnが移動する確率
+	final static int active_timer = 5;
+
+	public static void main(String[] args) {
+		// TODO 自動生成されたメソッド・スタブ
+
+		Simu simu = new Simu();
+		simu.simu_a();
+
+	}
+}
+

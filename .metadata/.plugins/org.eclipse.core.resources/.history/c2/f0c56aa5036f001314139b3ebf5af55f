@@ -1,0 +1,97 @@
+import java.util.Random;
+
+
+public class MobileNode {
+
+    int x; //x座標
+    int y; //y座標
+    boolean active;
+    int speed;
+    int id;
+    int HTP=0;
+    int cost;
+    int pa_num;
+    Field field;
+    Random ran;
+
+    MobileNode(int x,int y,int id){
+        this.x = x;
+        this.y = y;
+        this.id = id;
+        field = Field.getInstance();
+        ran = new Random();
+        isactive();
+        //シミュレーション開始で一回目の登録をするので、costの計算に注意
+        //MAGの最低コストはD_MAG_LMAとなる
+        pa_num = field.initial_mn_reg(x, y, id);
+    }
+
+
+    void update(){
+
+    	if(ismove())
+    	{
+    		detach_mag();
+    		move();
+    		attach_mag();
+    	}
+
+    	isactive();
+    }
+
+    void isactive(){
+     	if (ran.nextInt(100)<Main.active_rate) {active=true;}
+    	else{active=false;}
+
+    }
+
+    boolean ismove(){
+
+    	if (ran.nextInt(100)<Main.mn_move_prob) {return true;}
+    	else{return false;}
+
+    }
+
+    void move(){
+
+        switch(ran.nextInt(4)){
+        case 0:
+            if(x<Main.fieldx-1)x++;
+            break;
+        case 1:
+            if(y<Main.fieldy-1)y++;
+            break;
+        case 2:
+            if(x>0)x--;
+            break;
+        case 3:
+            if(y>0)y--;
+            break;
+        default:
+            break;
+        }
+
+    }
+
+    void state(){
+    	if(active){
+    		System.out.println("mn"+id+":("+x+","+y+") cost:"+cost+" active");
+    	}else{
+    		System.out.println("mn"+id+":("+x+","+y+") cost:"+cost);
+		}
+    }
+
+    void attach_mag(){
+    	field.reg_mag(x, y, id, pa_num, active);
+    	System.out.println("mn"+id+"("+x+","+y+")");
+    	//MAGへの登録コスト、router solicitation
+    	cost += Main.C_MN_MAG;
+    }
+
+    void detach_mag(){
+    	field.del_mag(x, y, id);
+    }
+    void receiveRA(){
+
+    }
+}

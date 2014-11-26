@@ -1,0 +1,94 @@
+
+import java.util.Random;
+
+
+public class Simu {
+
+
+	Field field;
+	double time = 0;
+	Random ran;
+	MN mn;
+	LMA lma;
+	MNlist mNlist;
+	int i;
+
+	public Simu() {
+		// TODO 自動生成されたコンストラクター・スタブ
+
+		field = Field.getInstance();
+		field.initField();
+		ran = new Random();
+
+		mNlist = new MNlist();
+
+
+
+		for (int i = 0; i < Main.nodeNum; i++) {
+
+			int x = ran.nextInt(Main.fieldx);
+			int y = ran.nextInt(Main.fieldy);
+
+
+			
+//			mn = new MN(x,y,i,Main.mn_mag_stay_time[ran.nextInt(Main.mn_mag_stay_time.length)]);
+			mn = new MN(x,y,i,Main.mn_mag_stay_time[0]);
+			//mnの初期MAGへの登録
+			mn.pa_num = field.initial_mn_reg(x, y,i);
+
+			mNlist.add(mn);
+
+
+		}
+
+		lma = new LMA(mNlist);
+		lma.allcate_interval_time();
+
+
+	}
+
+	void simu_a(){
+
+		time = 0;
+
+		System.out.println("Simulation time:"+Main.SimuTime+"\nField:"+Main.fieldx+"*"+Main.fieldy+
+				"\nNode"+ ":"+Main.nodeNum+"\nmn_move_prob:"
+				+Main.mn_move_prob+"\nactive_rate:"+Main.active_rate);
+
+		System.out.println("\nsimulation start");
+
+		for (int i = 0; i < Main.nodeNum; i++)mNlist.get(i).state();
+
+		System.out.println();
+
+
+		while (true)
+		{
+			time += Main.refresh_rate;
+
+			System.out.println(time);
+			//System.out.println(i);
+
+			i++;
+			if(i == 10){
+				for (int i = 0; i < Main.nodeNum; i++)mNlist.get(i).update();
+				i=0;
+			}
+			lma.update(time);
+
+			if(time >= Main.SimuTime)break;
+
+		}
+
+		System.out.println("simulation finish\n");
+		for (int i = 0; i < Main.nodeNum; i++)mNlist.get(i).state();
+		System.out.println();
+		field.print();
+		lma.state();
+
+		System.out.println("total_cost:"+Main.total_cost);
+	}
+
+
+
+}
