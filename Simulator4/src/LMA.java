@@ -28,8 +28,8 @@ public class LMA {
         ra = new Random();
         total_paging_cost = 0;
         paging_cost = 0;
-
     }
+
 
     void allocate_interval_time() {
 
@@ -37,7 +37,6 @@ public class LMA {
 
         for (int i = 0; i < Main.nodeNum; i++) {
             intervalList.add(calc_interval_time());
-
         }
     }
 
@@ -65,6 +64,7 @@ public class LMA {
                     }
                 }
 
+
                 //mnの状態をactive
                 mnList.get(i).change_mode(true);
                 //セッション回数を追加
@@ -74,17 +74,13 @@ public class LMA {
                 mnList.get(i).active_timer += Main.active_timer[ra.nextInt(Main.active_timer.length)];
                 System.out.println(time+" active_timer:"+mnList.get(i).active_timer);
 
-
-
                 //配列の先頭を削除
                 intervalList.get(i).remove(0);
-
                 //ページングエリアの中心を変更
                 mnList.get(i).pa_center_change(time);
 
             }
         }
-
     }
 
     void prepare_paging(int time, MN mn){
@@ -163,8 +159,8 @@ public class LMA {
 
                     }else{
 
-                 //  paging_cost += Main.paging_cost_array2[3 - mn_exist_row];
-                   // Main.paging_delay += Main.paging_delay_array2[3-mn_exist_row];
+                 //  paging_cost += Main.paging_cost_array2[3 - mn_exist_row_column];
+                   // Main.paging_delay += Main.paging_delay_array2[3-mn_exist_row_column];
 
                    paging_cost += Main.paging_cost_array14[4 - mn_exist_row];
                    Main.paging_delay += Main.paging_delay_array14[4-mn_exist_row];
@@ -181,8 +177,8 @@ public class LMA {
 
                     }else{
 
-                      // paging_cost += Main.paging_cost_array3[3 - mn_exist_row];
-                      // Main.paging_delay += Main.paging_delay_array3[3-mn_exist_row];
+                      // paging_cost += Main.paging_cost_array3[3 - mn_exist_row_column];
+                      // Main.paging_delay += Main.paging_delay_array3[3-mn_exist_row_column];
 
                      paging_cost += Main.paging_cost_array15[4 - mn_exist_row];
                        Main.paging_delay += Main.paging_delay_array15[4-mn_exist_row];
@@ -197,8 +193,8 @@ public class LMA {
 
                     }else{
 
-                       // paging_cost += Main.paging_cost_array3[3 - mn_exist_row];
-                       // Main.paging_delay += Main.paging_delay_array3[3-mn_exist_row];
+                       // paging_cost += Main.paging_cost_array3[3 - mn_exist_row_column];
+                       // Main.paging_delay += Main.paging_delay_array3[3-mn_exist_row_column];
 
                         paging_cost += Main.paging_cost_array16[4 - mn_exist_row];
                         Main.paging_delay += Main.paging_delay_array16[4-mn_exist_row];
@@ -224,8 +220,8 @@ public class LMA {
                         Main.paging_delay++;
                         System.out.println("   pagingnum:5");
                     }else{
-                     //   paging_cost += Main.paging_cost_array4[5 - mn_exist_row];
-                     //Main.paging_delay += Main.paging_delay_array4[5-mn_exist_row];
+                     //   paging_cost += Main.paging_cost_array4[5 - mn_exist_row_column];
+                     //Main.paging_delay += Main.paging_delay_array4[5-mn_exist_row_column];
 
 
                      paging_cost += Main.paging_cost_array17[6 - mn_exist_row];
@@ -241,8 +237,8 @@ public class LMA {
                         Main.paging_delay++;
                         System.out.println("   pagingnum:7");
                     }else{
-                      //  paging_cost += Main.paging_cost_array5[5 - mn_exist_row];
-                      //  Main.paging_delay += Main.paging_delay_array5[5-mn_exist_row];
+                      //  paging_cost += Main.paging_cost_array5[5 - mn_exist_row_column];
+                      //  Main.paging_delay += Main.paging_delay_array5[5-mn_exist_row_column];
 
                         paging_cost += Main.paging_cost_array18[6 - mn_exist_row];
                         Main.paging_delay += Main.paging_delay_array18[6-mn_exist_row];
@@ -259,8 +255,8 @@ public class LMA {
                         Main.paging_delay++;
                         System.out.println("   pagingnum:9");
                     }else{
-                       //paging_cost += Main.paging_cost_array6[5 - mn_exist_row];
-                        //Main.paging_delay += Main.paging_delay_array6[5-mn_exist_row];
+                       //paging_cost += Main.paging_cost_array6[5 - mn_exist_row_column];
+                        //Main.paging_delay += Main.paging_delay_array6[5-mn_exist_row_column];
 
                          paging_cost += Main.paging_cost_array19[6 - mn_exist_row];
                            Main.paging_delay += Main.paging_delay_array19[6-mn_exist_row];
@@ -290,8 +286,8 @@ public class LMA {
                         Main.paging_delay++;
                         System.out.println("   pagingnum:11");
                     }else{
-                      //  paging_cost += Main.paging_cost_array7[5 - mn_exist_row];
-                    //   Main.paging_delay += Main.paging_delay_array7[5-mn_exist_row];
+                      //  paging_cost += Main.paging_cost_array7[5 - mn_exist_row_column];
+                    //   Main.paging_delay += Main.paging_delay_array7[5-mn_exist_row_column];
 
                      paging_cost += Main.paging_cost_array21[6 - mn_exist_row];
                       Main.paging_delay += Main.paging_delay_array21[6-mn_exist_row];
@@ -316,8 +312,8 @@ public class LMA {
                         Main.paging_delay++;
                         System.out.println("   pagingnum:13");
                     }else{
-                        //paging_cost += Main.paging_cost_array8[7 - mn_exist_row];
-                       // Main.paging_delay += Main.paging_delay_array8[7-mn_exist_row];
+                        //paging_cost += Main.paging_cost_array8[7 - mn_exist_row_column];
+                       // Main.paging_delay += Main.paging_delay_array8[7-mn_exist_row_column];
 
                         paging_cost += Main.paging_cost_array22[8 - mn_exist_row];
                         Main.paging_delay += Main.paging_delay_array22[8-mn_exist_row];
@@ -333,8 +329,8 @@ public class LMA {
                         Main.paging_delay++;
                         System.out.println("   pagingnum:15");
                     }else{
-                      //  paging_cost += Main.paging_cost_array9[7 - mn_exist_row];
-                      // Main.paging_delay += Main.paging_delay_array9[7-mn_exist_row];
+                      //  paging_cost += Main.paging_cost_array9[7 - mn_exist_row_column];
+                      // Main.paging_delay += Main.paging_delay_array9[7-mn_exist_row_column];
 
                       paging_cost += Main.paging_cost_array23[8 - mn_exist_row];
                        Main.paging_delay += Main.paging_delay_array23[8-mn_exist_row];
@@ -351,8 +347,8 @@ public class LMA {
                         Main.paging_delay++;
                         System.out.println("   pagingnum:17");
                     }else{
-                      //  paging_cost += Main.paging_cost_array10[7 - mn_exist_row];
-                     //Main.paging_delay += Main.paging_delay_array10[7-mn_exist_row];
+                      //  paging_cost += Main.paging_cost_array10[7 - mn_exist_row_column];
+                     //Main.paging_delay += Main.paging_delay_array10[7-mn_exist_row_column];
 
                         paging_cost += Main.paging_cost_array24[8 - mn_exist_row];
                         Main.paging_delay += Main.paging_delay_array24[8-mn_exist_row];
@@ -369,8 +365,8 @@ public class LMA {
                         Main.paging_delay++;
                         System.out.println("   pagingnum:19");
                     }else{
-                     // paging_cost += Main.paging_cost_array11[7 - mn_exist_row];
-                     //  Main.paging_delay += Main.paging_delay_array11[7-mn_exist_row];
+                     // paging_cost += Main.paging_cost_array11[7 - mn_exist_row_column];
+                     //  Main.paging_delay += Main.paging_delay_array11[7-mn_exist_row_column];
 
                       paging_cost += Main.paging_cost_array25[8 - mn_exist_row];
                       Main.paging_delay += Main.paging_delay_array25[8-mn_exist_row];
@@ -386,8 +382,8 @@ public class LMA {
                         Main.paging_delay++;
                         System.out.println("   pagingnum:21");
                     }else{
-                      //  paging_cost += Main.paging_cost_array12[7 - mn_exist_row];
-                      //  Main.paging_delay += Main.paging_delay_array12[7-mn_exist_row];
+                      //  paging_cost += Main.paging_cost_array12[7 - mn_exist_row_column];
+                      //  Main.paging_delay += Main.paging_delay_array12[7-mn_exist_row_column];
 
                       paging_cost += Main.paging_cost_array26[8 - mn_exist_row];
                        Main.paging_delay += Main.paging_delay_array26[8-mn_exist_row];
@@ -422,8 +418,8 @@ public class LMA {
                         Main.paging_delay++;
                         System.out.println("   pagingnum:23");
                     }else{
-                    //    paging_cost += Main.paging_cost_array13[7 - mn_exist_row];
-                      //  Main.paging_delay += Main.paging_delay_array13[7-mn_exist_row];
+                    //    paging_cost += Main.paging_cost_array13[7 - mn_exist_row_column];
+                      //  Main.paging_delay += Main.paging_delay_array13[7-mn_exist_row_column];
 
                        paging_cost += Main.paging_cost_array28[8 - mn_exist_row];
                         Main.paging_delay += Main.paging_delay_array28[8-mn_exist_row];
@@ -450,8 +446,8 @@ public class LMA {
                         System.out.println("   pagingnum:13");
                     }else{
 
-                       // paging_cost += Main.paging_cost_array29[9 - mn_exist_row];
-                       // Main.paging_delay += Main.paging_delay_array29[9-mn_exist_row];
+                       // paging_cost += Main.paging_cost_array29[9 - mn_exist_row_column];
+                       // Main.paging_delay += Main.paging_delay_array29[9-mn_exist_row_column];
 
                         paging_cost += Main.paging_cost_array37[10 - mn_exist_row];
                         Main.paging_delay += Main.paging_delay_array37[10-mn_exist_row];
@@ -468,8 +464,8 @@ public class LMA {
                         System.out.println("   pagingnum:15");
                     }else{
 
-                      //  paging_cost += Main.paging_cost_array30[9 - mn_exist_row];
-                       //Main.paging_delay += Main.paging_delay_array30[9-mn_exist_row];
+                      //  paging_cost += Main.paging_cost_array30[9 - mn_exist_row_column];
+                       //Main.paging_delay += Main.paging_delay_array30[9-mn_exist_row_column];
 
                         paging_cost += Main.paging_cost_array38[10 - mn_exist_row];
                         Main.paging_delay += Main.paging_delay_array38[10-mn_exist_row];
@@ -488,8 +484,8 @@ public class LMA {
                         System.out.println("   pagingnum:17");
                     }else{
 
-                      //  paging_cost += Main.paging_cost_array31[9 - mn_exist_row];
-                      // Main.paging_delay += Main.paging_delay_array31[9-mn_exist_row];
+                      //  paging_cost += Main.paging_cost_array31[9 - mn_exist_row_column];
+                      // Main.paging_delay += Main.paging_delay_array31[9-mn_exist_row_column];
 
                         paging_cost += Main.paging_cost_array39[10 - mn_exist_row];
                         Main.paging_delay += Main.paging_delay_array39[10-mn_exist_row];
@@ -508,8 +504,8 @@ public class LMA {
                         System.out.println("   pagingnum:19");
                     }else{
 
-                      //  paging_cost += Main.paging_cost_array32[9 - mn_exist_row];
-                      // Main.paging_delay += Main.paging_delay_array32[9-mn_exist_row];
+                      //  paging_cost += Main.paging_cost_array32[9 - mn_exist_row_column];
+                      // Main.paging_delay += Main.paging_delay_array32[9-mn_exist_row_column];
 
                        paging_cost += Main.paging_cost_array40[10 - mn_exist_row];
                         Main.paging_delay += Main.paging_delay_array40[10-mn_exist_row];
@@ -527,8 +523,8 @@ public class LMA {
                         System.out.println("   pagingnum:21");
                     }else{
 
-                       // paging_cost += Main.paging_cost_array33[9 - mn_exist_row];
-                       // Main.paging_delay += Main.paging_delay_array33[9-mn_exist_row];
+                       // paging_cost += Main.paging_cost_array33[9 - mn_exist_row_column];
+                       // Main.paging_delay += Main.paging_delay_array33[9-mn_exist_row_column];
 
 
                         paging_cost += Main.paging_cost_array41[10 - mn_exist_row];
@@ -547,8 +543,8 @@ public class LMA {
                         System.out.println("   pagingnum:21");
                     }else{
 
-                        //paging_cost += Main.paging_cost_array34[9 - mn_exist_row];
-                       // Main.paging_delay += Main.paging_delay_array34[9-mn_exist_row];
+                        //paging_cost += Main.paging_cost_array34[9 - mn_exist_row_column];
+                       // Main.paging_delay += Main.paging_delay_array34[9-mn_exist_row_column];
 
                        paging_cost += Main.paging_cost_array42[10 - mn_exist_row];
                        Main.paging_delay += Main.paging_delay_array42[10-mn_exist_row];
@@ -562,8 +558,8 @@ public class LMA {
                         System.out.println("   pagingnum:21");
                     }else{
 
-                       // paging_cost += Main.paging_cost_array35[9 - mn_exist_row];
-                       // Main.paging_delay += Main.paging_delay_array35[9-mn_exist_row];
+                       // paging_cost += Main.paging_cost_array35[9 - mn_exist_row_column];
+                       // Main.paging_delay += Main.paging_delay_array35[9-mn_exist_row_column];
 
                         paging_cost += Main.paging_cost_array43[10 - mn_exist_row];
                        Main.paging_delay += Main.paging_delay_array43[10-mn_exist_row];
@@ -580,8 +576,8 @@ public class LMA {
                         System.out.println("   pagingnum:21");
                     }else{
 
-                       // paging_cost += Main.paging_cost_array35[9 - mn_exist_row];
-                       // Main.paging_delay += Main.paging_delay_array35[9-mn_exist_row];
+                       // paging_cost += Main.paging_cost_array35[9 - mn_exist_row_column];
+                       // Main.paging_delay += Main.paging_delay_array35[9-mn_exist_row_column];
 
                         paging_cost += Main.paging_cost_array44[10 - mn_exist_row];
                         Main.paging_delay += Main.paging_delay_array44[10-mn_exist_row];

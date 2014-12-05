@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.Random;
 
 /**
@@ -8,25 +9,19 @@ public class MN {
     int x; //x座標
     int y; //y座標
     boolean isActive;//mnの状態
-    int stay_time;
     int stay_time_count;
-    int id;//mnのid
     int bs_move_count;//bsを移動した回数
-    int session_count;//通信した回数
     int i;//count_active_timerで使用
-    int j;//move_historyで使用
-    int pa_center_x;//ページングエリアの中心
-    int pa_center_y;//ページングエリアの中心
+
     int move_direction;//ノードの移動した方向
     int move_dire_count[];//どの方向に移動したかカウント
-    int last_pa_move_time;
-    int active_timer;
-    int pa_staytime;//paが設定される時のstaytime
 
-    Field field;
+    int active_timer;
+
     MN_movement mn_movement;
-    PagingArea pa;
-    Random ran;
+
+    Random random;
+
 
     /*
     * 移動モデルの番号
@@ -41,17 +36,14 @@ public class MN {
     * */
     int dest_direction;
 
-    /*目的地座標*/
-    int dest_point;
+    //mnについて、activeになっている時間をつくる
+    public ArrayList<Integer> intervalList;
 
 
+    MN(int x,int y,int movement_model_num,int dest_direction) {
 
-    MN(int x,int y,int id,int movement_model_num,int dest_direction) {
-
-        this.x = pa_center_x = x;
-        this.y = pa_center_y = y;
-//        this.id = id;
-//        this.stay_time = pa_staytime = stay_time;
+        this.x = x;
+        this.y = y;
         isActive = false;
 
         bs_move_count = 0;
@@ -59,36 +51,40 @@ public class MN {
         this.movement_model_num = movement_model_num;
         this.dest_direction = dest_direction;
 
-
-//        field = Field.getInstance();
         mn_movement = new MN_movement(movement_model_num,dest_direction);
-//        move_dire_count = new int[8];
 
-//        pa = new PagingArea();
-//        pa.set_PA(move_dir,x,y,stay_time);
+        intervalList = calc_interval_time();
 
-//        ran = new Random();
+        random = new Random();
     }
 
     void update(int time) {
 
         if (isActive) count_active_timer();
 
+        active_state(time);
+
         if (++stay_time_count == Main.mn_bs_stay_time[0]) {
 
-//            detach_bs();
             move();
-//            attach_bs(time);
-//            state();
-            stay_time_count = 0;
 
+            stay_time_count = 0;
         }
 
     }
 
-    //ノードのモードを変更
-    void change_mode(boolean x) {
-        isActive = x;
+    void active_state(int time) {
+
+        if (intervalList.get(0) == time) {
+
+            if (!isActive) {
+                isActive = true;
+                //アクティブタイマーの長さを決定
+                active_timer += Main.active_timer[random.nextInt(Main.active_timer.length)];
+                //配列の先頭を削除
+                intervalList.remove(0);
+            }
+        }
     }
 
     //active状態の時間を測る
@@ -96,23 +92,12 @@ public class MN {
 
         i++;
         if (i >= active_timer+1) {
-            change_mode(false);
+            isActive = false;
             i = 0;
             active_timer = 0;
         }
     }
 
-
-    //セッションが来た際の座標をページングエリアの中心座標に変える
-    void pa_center_change(int time){
-        pa.pa_x.clear();
-        pa.pa_y.clear();
-        pa.set_PA(move_direction,x,y,stay_time);
-        pa_center_x = x;
-        pa_center_y = y;
-        last_pa_move_time = time;
-        pa_staytime = stay_time;
-    }
 
     void move() {
 
@@ -166,32 +151,33 @@ public class MN {
 
 
 
-    //MAGにattachした際の処理
-    void attach_bs(int time) {
+    //指数分布に従ったパケット送受信レート作成
+    ArrayList<Integer> calc_interval_time() {
 
-        //PAを移動しているかの判定
-        if(!pa.check(x, y)){//PAを移動した場合
-            pa.pa_x.clear();
-            pa.pa_y.clear();
-            pa.set_PA(move_direction,x,y,stay_time);
-            pa.pa_move_count++;
-            pa_center_x = x;
-            pa_center_y = y;
-            field.reg_bs(x, y,id ,true, isActive);
-            last_pa_move_time = time;
-            pa_staytime = stay_time;
+       ArrayList<Integer> expList = new ArrayList<Integer>();
+       double time = 0;
 
-        }else{
-            field.reg_bs(x, y,id ,false, isActive);
+        double t;
+        double t2;
+
+        while (time < Main.SimuTime) {
+
+            t = -Math.log(1 - Math.random()) / Main.lambda;
+
+            t2 = Main.per_unit_time * t;
+
+            time += t2;
+
+            expList.add((int) Math.round(time));
+            System.out.print((int)Math.round(time) + ",");
+
         }
 
+        System.out.println();
 
+        return expList;
     }
 
-    //MAGから離れる際の処理
-    void detach_bs() {
-        field.del_bs(x, y, id);
-    }
 
     //移動履歴を表示
     void print_move_history(){

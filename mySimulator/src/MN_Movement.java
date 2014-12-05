@@ -9,9 +9,8 @@ public class MN_movement {
     int direction_num;
     double[] direction_array;
     Random ran;
-    int staytime;
 
-    /*
+/*
 * 移動モデルの番号
 * 1:ランダム
 * 2:二地点最短
@@ -99,10 +98,18 @@ public class MN_movement {
 
     public void decide_movement_model(){
 
-        if(movement_model_num <= 1){
-            set_direction_random();
-        }else{
-            set_direction();
+        switch (movement_model_num) {
+            case 1:
+                set_direction_random();
+                break;
+            case 2:
+                set_direction();
+                break;
+            case 3:
+                set_fixed_direction();
+                break;
+            default:
+                break;
         }
     }
 
@@ -132,6 +139,20 @@ public class MN_movement {
             direction_array[not_move_direction_array[i]] = 0;
         }
 
+    }
+
+    public void set_fixed_direction(){
+
+        //目的地方向1で、それ以外は0
+        for (int i = 0;i<direction_array.length;i++){
+
+            if (i == dest_direction){
+                direction_array[i] = 1;
+            }else{
+                direction_array[i] = 0;
+            }
+
+        }
     }
 
     public int move(){

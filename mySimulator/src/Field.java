@@ -29,19 +29,20 @@ public class Field {
         }
     }
 
+
     //MNをBSへ登録
-    void reg_bs(int x, int y, int id,boolean send_pbu,boolean active) {
-        bs[x][y].reg_mn(id,send_pbu,active);
+    void reg_bs(int x, int y,boolean send_pbu,boolean active) {
+        bs[x][y].reg_mn(send_pbu,active);
     }
 
     //BSからMNを削除
-    void del_bs(int x, int y, int id) {
-        bs[x][y].del_mn(id);
+    void del_bs(int x, int y) {
+        bs[x][y].del_mn();
     }
 
     //シミュレーション開始時の登録
-    void initial_mn_reg(int x, int y, int id) {
-        bs[x][y].first_reg_mn(id);
+    void initial_mn_reg(int x, int y) {
+        bs[x][y].first_reg_mn();
     }
 
     void print() {

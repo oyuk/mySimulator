@@ -1,3 +1,4 @@
+import java.io.*;
 import java.math.BigDecimal;
 import java.util.Random;
 
@@ -10,39 +11,26 @@ public class Simulator {
     private int time = 0;
     private Random ran;
     private MN mn;
-    private PagingManager pagingManager;
     private MNlist mNlist;
     private BigDecimal bi;
 
     private MN_state[] mn_state_array;
+
+    private final int initial_x = 100;
+    private final int initial_y = 100;
 
     public Simulator() {
 
         field = Field.getInstance();
         field.initField();
         ran = new Random();
-        mNlist = new MNlist();
 
         for (int i = 0; i < Main.nodeNum; i++) {
-
-            int x = 100;
-            int y = 100;
-
-//			mn = new MN(x,y,i,Main.mn_mag_stay_time[ran.nextInt(Main.mn_mag_stay_time.length)]);
-//          mn = new MN(x,y,i,Main.mn_bs_stay_time[0],2);
-
-//          MN(int x,int y,int id,int movement_model_num,int dest_direction)
-
-            mn= new MN(x,y,i,1,2);
-
-            //mnの初期BSへの登録
-//            field.initial_mn_reg(x, y, i);
-//            mNlist.add(mn);
+            mn = new MN(initial_x, initial_y,1,2);
         }
 
-        pagingManager = new PagingManager(mNlist);
-        pagingManager.allocate_interval_time();
     }
+
 
     /*
     *
@@ -65,6 +53,7 @@ public class Simulator {
 
             if (time >= Main.SimuTime) break;
         }
+
     }
 
     /*
@@ -75,69 +64,83 @@ public class Simulator {
     * */
     public void calcCost(){
 
-        CalcCost_MN ccmn = new CalcCost_MN();
+        //目的地方向を設定
+        int dest_direction = makeMNDirection();
 
         MN_state mn_state;
+
+        CalcCost_MN ccmn = new CalcCost_MN(initial_x,initial_y,mn.movement_model_num,dest_direction);
+
+        field.initial_mn_reg(initial_x,initial_y);
 
         for (int i = 0;i<mn_state_array.length;i++){
 
             mn_state = mn_state_array[i];
 
-            //activeなら
-            if (mn_state_array[i].isActive()){
+            ccmn.update(mn_state.getX(),mn_state.getY(),mn_state.isActive());
+        }
 
+    }
+
+
+    /*
+    *
+    *
+    * MNの初期位置と最終地から移動方向をつくる
+    *
+    * */
+
+    public int makeMNDirection() {
+
+        int abs_diff_x = Math.abs(initial_x - mn.x);
+        int abs_diff_y = Math.abs(initial_y - mn.y);
+
+        int diff_x = mn.x - initial_x;
+        int diff_y = mn.y - initial_y;
+
+        if (abs_diff_x <= 1) {
+
+            if (diff_y >= 1) {
+                return 0;
+            } else if (diff_y <= -1) {
+                return 4;
             }
         }
 
+
+        if (abs_diff_y <= 1) {
+
+            if (diff_x >= 2) {
+                return 2;
+            } else if (diff_x <= -2) {
+                return 6;
+            }
+        }
+
+
+        if (diff_x >= 2 && diff_y >= 2) {
+            return 1;
+        } else if (diff_x >= 2 && diff_y <= -2) {
+            return 3;
+        } else if (diff_x <= -2 && diff_y <= -2) {
+            return 5;
+        } else if (diff_x <= -2 && diff_y >= 2) {
+            return 7;
+        }
+
+        return 0;
+
     }
 
+    public void startSimulation() {
 
-    public void startSimulation(){
-
-        time = 0;
-        System.out.println("Simulation time:" + Main.SimuTime + "\nField:" + Main.fieldx + "*" + Main.fieldy +
-                "\nNode" + ":" + Main.nodeNum);
-
-        System.out.println("\nsimulation start");
-
-//        for (int i = 0; i < Main.nodeNum; i++) mNlist.get(i).state();
-
-        System.out.println();
+        for(int i =0;i<1000;i++){
 
 
-        while (true) {
-            time += Main.refresh_rate;
-
-            // System.out.println(time);
-
-            for (int i = 0; i < Main.nodeNum; i++) mNlist.get(i).update(time);
-
-            pagingManager.update(time);
-
-            if (time >= Main.SimuTime) break;
 
         }
 
-        System.out.println("simulation finish\n");
 
-        System.out.println();
-        field.print();
-        System.out.println();
-        for (int i = 0; i < Main.nodeNum; i++) {
-            mNlist.get(i).state();
-            mNlist.get(i).print_move_history();
-        }
-        System.out.println();
-        pagingManager.state();
-
-        System.out.println("PagingManager:location registration cost:"+Main.location_registration_cost);
-        //System.out.println("straight:"+Main.straight);
-        System.out.println("total_cost:" + (Main.total_cost+pagingManager.total_paging_cost));
-        System.out.println("total_paging_delay:" + Main.paging_delay);
-        System.out.println("average_paging_delay:" + ((double)Main.paging_delay/(double)pagingManager.session_come_count));
-        System.out.println("pbu_count:" + Main.PBU_count);
-        System.out.println("pbu2_count:" + Main.PBU2_count);
     }
-
 
 }
