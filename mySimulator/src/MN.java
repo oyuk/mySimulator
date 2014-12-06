@@ -14,7 +14,6 @@ public class MN {
     int i;//count_active_timerで使用
 
     int move_direction;//ノードの移動した方向
-    int move_dire_count[];//どの方向に移動したかカウント
 
     int active_timer;
 
@@ -51,6 +50,8 @@ public class MN {
         this.movement_model_num = movement_model_num;
         this.dest_direction = dest_direction;
 
+        System.out.println("MN dest_directoin : "+ this.dest_direction);
+
         mn_movement = new MN_movement(movement_model_num,dest_direction);
 
         intervalList = calc_interval_time();
@@ -64,7 +65,7 @@ public class MN {
 
         active_state(time);
 
-        if (++stay_time_count == Main.mn_bs_stay_time[0]) {
+        if (++stay_time_count == Main.mn_bs_stay_time) {
 
             move();
 
@@ -117,27 +118,35 @@ public class MN {
             switch (move_direction = mn_movement.move()) {
                 case 0:
                     if (y < Main.fieldy - 1) y++;//上
+                    System.out.println("↑");
                     break;
                 case 1:
                     if (x < Main.fieldx - 1 && y < Main.fieldy - 1) {x++;y++;}//右上
+                    System.out.println("↗");
                     break;
                 case 2:
                     if (x < Main.fieldx - 1) x++;//右
+                    System.out.println("→");
                     break;
                 case 3:
                     if (x < Main.fieldx - 1 && y > 0) {x++;y--;}//右下
+                    System.out.println("↘");
                     break;
                 case 4:
                     if (y > 0) y--;//下
+                    System.out.println("↓");
                     break;
                 case 5:
                     if (x > 0 && y > 0) {x--;y--;}//左下
+                    System.out.println("↙");
                     break;
                 case 6:
                     if (x > 0) x--;//左
+                    System.out.println("←");
                     break;
                 case 7:
                     if (x > 0 && y < Main.fieldy - 1) {x--;y++;}//左上
+                    System.out.println("↖");
                     break;
                 default:
                     break;
@@ -145,8 +154,8 @@ public class MN {
 
         }
 
-        move_dire_count[move_direction]++;
-        bs_move_count++;
+        System.out.println("(" +this.x+ ","+this.y+")");
+        Main.move_count++;
     }
 
 
@@ -169,22 +178,13 @@ public class MN {
             time += t2;
 
             expList.add((int) Math.round(time));
-            System.out.print((int)Math.round(time) + ",");
+//            System.out.print((int)Math.round(time) + ",");
 
         }
 
-        System.out.println();
+//        System.out.println();
 
         return expList;
-    }
-
-
-    //移動履歴を表示
-    void print_move_history(){
-
-        for(int i = 0;i< move_dire_count.length;i++){
-            System.out.println(i+":"+ move_dire_count[i]);
-        }
     }
 
 }

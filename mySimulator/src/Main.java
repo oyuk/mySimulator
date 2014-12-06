@@ -1,22 +1,29 @@
 import java.io.*;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by oky on 14/11/26.
  */
 public class Main {
 
+    static final int SimuCount = 1;
+
     //フィールドの範囲
     static final int fieldx = 200;
     static final int fieldy = 200;
 
     //シミュレーション時間
-    static final int SimuTime = 60*60*1;
+    static int SimuTime = 0;
     static final int refresh_rate = 1;
     //MNの数
     static final int nodeNum = 1;
 
     //MNがMAGにいる時間
-    static final int mn_bs_stay_time[] = {102,154};
+    static int mn_bs_stay_time = 0;
+
+
+    static int movement_model_num = 0;
 
 //    MNがactive状態になっている時間
     static final int active_timer[] = {15,30,60};
@@ -28,7 +35,7 @@ public class Main {
     * per_unit_time:単位時間
     *
     */
-    final static int lambda = 3;
+    static int lambda = 3;
     //1時間を単位時間とする
     final static int per_unit_time = 60*60;
 
@@ -39,30 +46,39 @@ public class Main {
     final static int[] C_proposed_paging_34 = {6,12};
     final static int[] C_proposed_paging_35 = {3,9,15};
 
-    static int paging_area_extent;
+    //位置登録エリアの大きさ
+    static int location_registration_area_extent;
 
 
-/*位置登録をした回数*/
+    /*位置登録をした回数*/
+    /*BS locationupadte*/
     static int location_registration_num = 0;
 
     /*ページングエリアを移動した回数*/
+    /*CalcCost_MN attachbs*/
     static int pagingarea_move_num = 0;
 
-    /*平均ページングディレイ*/
+    /*ページングディレイ*/
+    /*PagingArea paging*/
     static int paging_delay = 0;
 
     /*ページングしたセル数*/
+    /*pagingArea paging*/
     static int paging_cell_num = 0;
 
     /*ページングした回数*/
+    /*PagingArea paging*/
     static int paging_num = 0;
 
     /*ページングコスト * ページング回数*/
     static int total_paging_cost = 0;
 
     /*移動した回数*/
+    /*MN move*/
     static int move_count = 0;
 
+/*迂回しているため手法が使えなかったmnの数*/
+    static int detour_count = 0;
 
     /*テキストファイルから読み込むパラメータ
     *
@@ -100,21 +116,28 @@ public class Main {
     *             2:二地点最短
     *             3:二地点迂回
     *
-    *
+    * 一時間あたりの平均通信回数のλ
+    *              1,2,3
     *
     *
     * */
 
-    static final String filePath = "/Users/oky/Dropbox/research/seminar/M1/ronbun/simulator/test.txt";
+    static String filePath;
 
     public static void main(String[] args) {
 
-        readFile();
-//        new Simulator().startSimulation();
+        if (args != null) {
+
+            filePath = args[0];
+            readFile();
+            new Simulator().startSimulation();
+
+        }
     }
 
-
     private static void readFile(){
+
+        List<String> paramList = new ArrayList<String>();
 
         try {
 
@@ -123,15 +146,46 @@ public class Main {
 
             String str;
             while ((str = br.readLine()) != null) {
-                System.out.println(str);
+                paramList.add(str);
             }
 
             br.close();
+
+            if (paramList.size() == 5){
+                setParam(paramList);
+            }
+
         }catch(FileNotFoundException e){
             System.out.println(e);
         }catch(IOException e){
             System.out.println(e);
         }
+    }
+
+    private static void setParam(List<String> list) {
+
+        SimuTime = (int) (Float.parseFloat(list.get(0)) * 3600);
+
+        float bs_radius = Float.parseFloat(list.get(1));
+
+
+        mn_bs_stay_time = (int)((bs_radius/35) * 3600);
+
+
+        location_registration_area_extent = Integer.parseInt(list.get(2));
+
+        movement_model_num = Integer.parseInt(list.get(3));
+
+        lambda = Integer.parseInt(list.get(4));
+
+
+//        System.out.println("SimuTime =                          " + SimuTime);
+//        System.out.println("mn_bs_stay_time =                   " + mn_bs_stay_time);
+//        System.out.println("location_registration_area_extent = " + location_registration_area_extent);
+//        System.out.println("movement_model_num =                " + movement_model_num);
+//        System.out.println("lambda =                            " + lambda);
+//        System.out.println();
+
     }
 
 

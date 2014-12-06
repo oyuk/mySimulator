@@ -40,7 +40,8 @@ public class CalcCost_MN {
         pagingArea = new PagingArea(movement_model_num,dest_direction);
         pagingArea.set_PA(this.x, this.y);
         field = Field.getInstance();
-        field.initial_mn_reg(x,y);
+
+        System.out.println("ccmn dest_directoin : "+ this.dest_direction);
 
         random = new Random();
     }
@@ -49,13 +50,11 @@ public class CalcCost_MN {
 
         /*activeに変わった時にPAを作り直す*/
         if (isActive && !this.isActive){
-            pa_center_change();
 
              /* セッションがmn宛か、mnが通信を始めるのかの判定
                 1/2で分岐する
                 mnからの通信の場合は何もしない*/
             if (random.nextInt(2) == 0){
-
                 pagingArea.paging(this.x,this.y);
             }
 
@@ -65,14 +64,103 @@ public class CalcCost_MN {
         this.isActive = isActive;
 
         if (this.x != x || this.y != y) {
+
             detach_bs();
+
+            if(movement_model_num != 1) {
+                checkMoveDirectionisCorrect(x, y);
+            }
+
             this.x = x;
             this.y = y;
+
             attach_bs();
 
-            Main.move_count++;
         }
     }
+
+
+
+    void checkMoveDirectionisCorrect(int after_x,int after_y){
+
+        int diff_x = after_x - this.x;
+        int diff_y = after_y - this.y;
+
+        boolean is_movement_model_change = false;
+
+        switch (this.dest_direction){
+            case 0:
+                if (diff_y == -1){
+                    is_movement_model_change = true;
+                    System.out.println("0");
+                }
+                break;
+            case 1:
+                if((diff_x == -1 && diff_y == 0)||
+                        (diff_x == -1 && diff_y == -1 )||
+                                (diff_x == 0 && diff_y == -1))
+                {is_movement_model_change = true;
+                    System.out.println("1");}
+                break;
+            case 2:
+                if (diff_x == -1){
+                    is_movement_model_change = true;
+                    System.out.println("2");
+                }
+                break;
+            case 3:
+                if((diff_x == -1 && diff_y == 0)||
+                        (diff_x == -1 && diff_y == 1 )||
+                        (diff_x == 0 && diff_y == 1))
+                {
+                    is_movement_model_change = true;
+                    System.out.println("3");}
+                break;
+            case 4:
+                if (diff_y == 1){
+                    is_movement_model_change = true;
+                    System.out.println("4");}
+                break;
+            case 5:
+                if((diff_x == 0 && diff_y == 1)||
+                        (diff_x == 1 && diff_y == 1 )||
+                        (diff_x == 1 && diff_y == 0))
+                {
+                    is_movement_model_change = true;
+                    System.out.println("5");
+                }
+                break;
+            case 6:
+                if (diff_x == 1){
+                    is_movement_model_change = true;
+                    System.out.println("6");}
+                break;
+            case 7:
+                if((diff_x == 1 && diff_y == 0)||
+                        (diff_x == 1 && diff_y == -1 )||
+                        (diff_x == 0 && diff_y == -1))
+                {
+                    is_movement_model_change = true;
+                    System.out.println("7");}
+                break;
+            default:
+                break;
+        }
+
+
+        if(is_movement_model_change) {
+            this.movement_model_num = pagingArea.movement_model_num = 1;
+            Main.detour_count++;
+
+            System.out.println("-------------------------------");
+            System.out.println("|     movement_model_change   |");
+            System.out.println("-------------------------------");
+            System.out.println("("+this.x+","+this.y+")->("+after_x+","+after_y+")");
+            System.out.println("diff_x = " + diff_x);
+            System.out.println("diff_y = " + diff_y);
+        }
+    }
+
 
     //セッションが来た際の座標をページングエリアの中心座標に変える
     void pa_center_change(){

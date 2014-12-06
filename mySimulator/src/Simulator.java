@@ -1,5 +1,3 @@
-import java.io.*;
-import java.math.BigDecimal;
 import java.util.Random;
 
 /**
@@ -8,11 +6,10 @@ import java.util.Random;
 public class Simulator {
 
     private Field field;
-    private int time = 0;
+
     private Random ran;
     private MN mn;
-    private MNlist mNlist;
-    private BigDecimal bi;
+
 
     private MN_state[] mn_state_array;
 
@@ -25,12 +22,7 @@ public class Simulator {
         field.initField();
         ran = new Random();
 
-        for (int i = 0; i < Main.nodeNum; i++) {
-            mn = new MN(initial_x, initial_y,1,2);
-        }
-
     }
-
 
     /*
     *
@@ -39,7 +31,7 @@ public class Simulator {
     * */
     public void recordMoveHistory(){
 
-        time = 0;
+        int time = 0;
 
         mn_state_array = new MN_state[Main.SimuTime];
 
@@ -66,6 +58,8 @@ public class Simulator {
 
         //目的地方向を設定
         int dest_direction = makeMNDirection();
+
+
 
         MN_state mn_state;
 
@@ -112,6 +106,7 @@ public class Simulator {
 
             if (diff_x >= 2) {
                 return 2;
+
             } else if (diff_x <= -2) {
                 return 6;
             }
@@ -134,13 +129,56 @@ public class Simulator {
 
     public void startSimulation() {
 
-        for(int i =0;i<1000;i++){
+        for(int i =0;i<Main.SimuCount;i++){
 
-
+            mn = new MN(initial_x,initial_y,Main.movement_model_num,ran.nextInt(8));
+            recordMoveHistory();
+            calcCost();
 
         }
 
+        showResult();
 
     }
 
+    private void showResult(){
+
+        System.out.println("\nPARAM\n");
+
+        System.out.println("SimuTime                          = " + Main.SimuTime);
+        System.out.println("mn_bs_stay_time                   = " + Main.mn_bs_stay_time);
+        System.out.println("location_registration_area_extent = " + Main.location_registration_area_extent);
+        System.out.println("movement_model_num                = " + Main.movement_model_num);
+        System.out.println("lambda                            = " + Main.lambda);
+
+
+        System.out.println("\nTOTAL\n");
+
+        System.out.println("location_registration_num = " + Main.location_registration_num);
+        System.out.println("pagingarea_move_num       = " + Main.pagingarea_move_num);
+        System.out.println("paging_num                = "+Main.paging_num);
+        System.out.println("paging_cell_num           = "+Main.paging_cell_num);
+        System.out.println("paging_delay              = "+Main.paging_delay);
+        System.out.println("move_count                = " + Main.move_count);
+        System.out.println("detour_count                = " + Main.detour_count);
+
+        System.out.println("\nAVERAGE\n");
+
+
+        System.out.println("location_registration_num = " + (double)Main.location_registration_num/Main.SimuCount);
+        System.out.println("pagingarea_move_num       = " + (double)Main.pagingarea_move_num/Main.SimuCount);
+        System.out.println("paging_num                = " + (double)Main.paging_num/Main.SimuCount);
+
+        if(Main.paging_num >= 1) {
+            System.out.println("paging_delay              = " + (double)Main.paging_delay / Main.paging_num);
+            System.out.println("paging_cell_num           = " + (double)Main.paging_cell_num / Main.paging_num);
+        }else{
+            System.out.println("paging_delay              = 0");
+            System.out.println("paging_cell_num           = 0");
+        }
+
+        System.out.println("move_count                = " + Main.move_count/Main.SimuCount);
+        System.out.println("detour_count_rate         = " + (double)Main.detour_count/Main.SimuCount);
+
+    }
 }

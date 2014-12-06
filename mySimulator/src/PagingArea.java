@@ -8,7 +8,7 @@ public class PagingArea {
     ArrayList<Integer> pa_x;
     ArrayList<Integer> pa_y;
     int pa_move_count;//PAを移動した回数
-    int pa_size;
+
 
     /*
    * 移動モデルの番号
@@ -59,140 +59,271 @@ public class PagingArea {
             pa_y.add(y + 1);
             pa_y.add(y + 1);
             pa_y.add(y + 1);
-        }
+
+        }else {
+
+            //目的地方向に広くPAをとる
+            switch (dest_direction) {
+                case 0://上
+                    pa_x.add(x - 1);
+                    pa_x.add(x);
+                    pa_x.add(x + 1);
+                    pa_x.add(x - 1);
+                    pa_x.add(x);
+                    pa_x.add(x + 1);
+                    pa_x.add(x - 1);
+                    pa_x.add(x);
+                    pa_x.add(x + 1);
 
 
-        switch (dest_direction){
-            case 0://上
-                pa_x.add(x-1);pa_x.add(x);pa_x.add(x+1);
-                pa_x.add(x-1);pa_x.add(x);pa_x.add(x+1);
-                pa_x.add(x-1);pa_x.add(x);pa_x.add(x+1);
+                    pa_y.add(y);
+                    pa_y.add(y);
+                    pa_y.add(y);
+                    pa_y.add(y + 1);
+                    pa_y.add(y + 1);
+                    pa_y.add(y + 1);
+                    pa_y.add(y + 2);
+                    pa_y.add(y + 2);
+                    pa_y.add(y + 2);
 
 
-                pa_y.add(y);pa_y.add(y);pa_y.add(y);
-                pa_y.add(y+1);pa_y.add(y+1);pa_y.add(y+1);
-                pa_y.add(y+2);pa_y.add(y+2);pa_y.add(y+2);
+                    for (int i = 0; i < Main.location_registration_area_extent; i++) {
+                        pa_x.add(x - 1);
+                        pa_x.add(x);
+                        pa_x.add(x + 1);
+                        pa_y.add(y + 3 + i);
+                        pa_y.add(y + 3 + i);
+                        pa_y.add(y + 3 + i);
+                    }
+
+                    break;
+                case 1://右上
+                    pa_x.add(x - 1);
+                    pa_x.add(x);
+                    pa_x.add(x + 1);
+                    pa_x.add(x);
+                    pa_x.add(x + 1);
+                    pa_x.add(x + 1);
+                    pa_x.add(x + 1);
+                    pa_x.add(x + 2);
+                    pa_x.add(x + 2);
+
+                    pa_y.add(y + 1);
+                    pa_y.add(y);
+                    pa_y.add(y - 1);
+                    pa_y.add(y + 1);
+                    pa_y.add(y + 1);
+                    pa_y.add(y);
+                    pa_y.add(y + 2);
+                    pa_y.add(y + 2);
+                    pa_y.add(y + 1);
 
 
-                for (int i = 0; i < Main.paging_area_extent; i++) {
-                    pa_x.add(x-1);pa_x.add(x);pa_x.add(x+1);
-                    pa_y.add(y+3+i);pa_y.add(y+3+i);pa_y.add(y+3+i);
-                }
+                    for (int i = 0; i < Main.location_registration_area_extent; i++) {
+                        pa_x.add(x + 2 + i);
+                        pa_x.add(x + 3 + i);
+                        pa_x.add(x + 3 + i);
+                        pa_y.add(y + 3 + i);
+                        pa_y.add(y + 3 + i);
+                        pa_y.add(y + 2 + i);
+                    }
 
-                break;
-            case 1://右上
-                pa_x.add(x-1);pa_x.add(x);pa_x.add(x+1);
-                pa_x.add(x);pa_x.add(x+1);pa_x.add(x+1);
-                pa_x.add(x+1);pa_x.add(x+2);pa_x.add(x+2);
+                    break;
+                case 2://右
+                    pa_x.add(x);
+                    pa_x.add(x);
+                    pa_x.add(x);
+                    pa_x.add(x + 1);
+                    pa_x.add(x + 1);
+                    pa_x.add(x + 1);
+                    pa_x.add(x + 2);
+                    pa_x.add(x + 2);
+                    pa_x.add(x + 2);
 
-                pa_y.add(y+1);pa_y.add(y);pa_y.add(y-1);
-                pa_y.add(y+1);pa_y.add(y+1);pa_y.add(y);
-                pa_y.add(y+2);pa_y.add(y+2);pa_y.add(y+1);
-
-
-                for (int i = 0; i < Main.paging_area_extent; i++) {
-                    pa_x.add(x+2+i);pa_x.add(x+3+i);pa_x.add(x+3+i);
-                    pa_y.add(y+3+i);pa_y.add(y+3+i);pa_y.add(y+2+i);
-                }
-
-                break;
-            case 2://右
-                pa_x.add(x);pa_x.add(x);pa_x.add(x);
-                pa_x.add(x+1);pa_x.add(x+1);pa_x.add(x+1);
-                pa_x.add(x+2);pa_x.add(x+2);pa_x.add(x+2);
-
-                pa_y.add(y+1);pa_y.add(y);pa_y.add(y-1);
-                pa_y.add(y+1);pa_y.add(y);pa_y.add(y-1);
-                pa_y.add(y+1);pa_y.add(y);pa_y.add(y-1);
-
-
-                for (int i = 0; i < Main.paging_area_extent; i++) {
-                    pa_x.add(x+3+i);pa_x.add(x+3+i);pa_x.add(x+3+i);
-                    pa_y.add(y+1);pa_y.add(y);pa_y.add(y-1);
-                }
-
-                break;
-            case 3://右下
-                pa_x.add(x-1);pa_x.add(x);pa_x.add(x+1);
-                pa_x.add(x);pa_x.add(x+1);pa_x.add(x+1);
-                pa_x.add(x+1);pa_x.add(x+2);pa_x.add(x+2);
-
-                pa_y.add(y-1);pa_y.add(y);pa_y.add(y+1);
-                pa_y.add(y-1);pa_y.add(y-1);pa_y.add(y);
-                pa_y.add(y-2);pa_y.add(y-2);pa_y.add(y-1);
+                    pa_y.add(y + 1);
+                    pa_y.add(y);
+                    pa_y.add(y - 1);
+                    pa_y.add(y + 1);
+                    pa_y.add(y);
+                    pa_y.add(y - 1);
+                    pa_y.add(y + 1);
+                    pa_y.add(y);
+                    pa_y.add(y - 1);
 
 
-                for (int i = 0; i < Main.paging_area_extent; i++) {
-                    pa_x.add(x+2+i);pa_x.add(x+3+i);pa_x.add(x+3+i);
-                    pa_y.add(y-3-i);pa_y.add(y-3-i);pa_y.add(y-2-i);
-                }
+                    for (int i = 0; i < Main.location_registration_area_extent; i++) {
+                        pa_x.add(x + 3 + i);
+                        pa_x.add(x + 3 + i);
+                        pa_x.add(x + 3 + i);
+                        pa_y.add(y + 1);
+                        pa_y.add(y);
+                        pa_y.add(y - 1);
+                    }
 
-                break;
-            case 4://下
-                pa_x.add(x-1);pa_x.add(x);pa_x.add(x+1);
-                pa_x.add(x-1);pa_x.add(x);pa_x.add(x+1);
-                pa_x.add(x-1);pa_x.add(x);pa_x.add(x+1);
+                    break;
+                case 3://右下
+                    pa_x.add(x - 1);
+                    pa_x.add(x);
+                    pa_x.add(x + 1);
+                    pa_x.add(x);
+                    pa_x.add(x + 1);
+                    pa_x.add(x + 1);
+                    pa_x.add(x + 1);
+                    pa_x.add(x + 2);
+                    pa_x.add(x + 2);
 
-                pa_y.add(y);pa_y.add(y);pa_y.add(y);
-                pa_y.add(y-1);pa_y.add(y-1);pa_y.add(y-1);
-                pa_y.add(y-2);pa_y.add(y-2);pa_y.add(y-2);
-
-
-                for (int i = 0; i < Main.paging_area_extent; i++) {
-                    pa_x.add(x-1);pa_x.add(x);pa_x.add(x+1);
-                    pa_y.add(y-3-i);pa_y.add(y-3-i);pa_y.add(y-3-i);
-                }
-
-                break;
-            case 5://左下
-                pa_x.add(x-1);pa_x.add(x);pa_x.add(x+1);
-                pa_x.add(x-1);pa_x.add(x-1);pa_x.add(x);
-                pa_x.add(x-2);pa_x.add(x-2);pa_x.add(x-1);
-
-                pa_y.add(y+1);pa_y.add(y);pa_y.add(y-1);
-                pa_y.add(y);pa_y.add(y-1);pa_y.add(y-1);
-                pa_y.add(y-1);pa_y.add(y-2);pa_y.add(y-2);
-
-                for (int i = 0; i < Main.paging_area_extent; i++) {
-                    pa_x.add(x-3-i);pa_x.add(x-3-i);pa_x.add(x-2-i);
-                    pa_y.add(y-2-i);pa_y.add(y-3-i);pa_y.add(y-3-i);
-                }
-
-                break;
-            case 6://左
-                pa_x.add(x);pa_x.add(x);pa_x.add(x);
-                pa_x.add(x-1);pa_x.add(x-1);pa_x.add(x-1);
-                pa_x.add(x-2);pa_x.add(x-2);pa_x.add(x-2);
-
-                pa_y.add(y+1);pa_y.add(y);pa_y.add(y-1);
-                pa_y.add(y+1);pa_y.add(y);pa_y.add(y-1);
-                pa_y.add(y+1);pa_y.add(y);pa_y.add(y-1);
+                    pa_y.add(y - 1);
+                    pa_y.add(y);
+                    pa_y.add(y + 1);
+                    pa_y.add(y - 1);
+                    pa_y.add(y - 1);
+                    pa_y.add(y);
+                    pa_y.add(y - 2);
+                    pa_y.add(y - 2);
+                    pa_y.add(y - 1);
 
 
-                for (int i = 0; i < Main.paging_area_extent; i++) {
-                    pa_x.add(x-3-i);pa_x.add(x-3-i);pa_x.add(x-3-i);
-                    pa_y.add(y+1);pa_y.add(y);pa_y.add(y-1);
-                }
+                    for (int i = 0; i < Main.location_registration_area_extent; i++) {
+                        pa_x.add(x + 2 + i);
+                        pa_x.add(x + 3 + i);
+                        pa_x.add(x + 3 + i);
+                        pa_y.add(y - 3 - i);
+                        pa_y.add(y - 3 - i);
+                        pa_y.add(y - 2 - i);
+                    }
 
-                break;
-            case 7://左上
-                pa_x.add(x-1);pa_x.add(x);pa_x.add(x+1);
-                pa_x.add(x-1);pa_x.add(x-1);pa_x.add(x);
-                pa_x.add(x-2);pa_x.add(x-2);pa_x.add(x-1);
+                    break;
+                case 4://下
+                    pa_x.add(x - 1);
+                    pa_x.add(x);
+                    pa_x.add(x + 1);
+                    pa_x.add(x - 1);
+                    pa_x.add(x);
+                    pa_x.add(x + 1);
+                    pa_x.add(x - 1);
+                    pa_x.add(x);
+                    pa_x.add(x + 1);
 
-                pa_y.add(y-1);pa_y.add(y);pa_y.add(y+1);
-                pa_y.add(y);pa_y.add(y+1);pa_y.add(y+1);
-                pa_y.add(y+1);pa_y.add(y+2);pa_y.add(y+2);
+                    pa_y.add(y);
+                    pa_y.add(y);
+                    pa_y.add(y);
+                    pa_y.add(y - 1);
+                    pa_y.add(y - 1);
+                    pa_y.add(y - 1);
+                    pa_y.add(y - 2);
+                    pa_y.add(y - 2);
+                    pa_y.add(y - 2);
 
 
-                for (int i = 0; i < Main.paging_area_extent; i++) {
-                    pa_x.add(x-3-i);pa_x.add(x-3-i);pa_x.add(x-2-i);
-                    pa_y.add(y+2+i);pa_y.add(y+3+i);pa_y.add(y+3+i);
-                }
+                    for (int i = 0; i < Main.location_registration_area_extent; i++) {
+                        pa_x.add(x - 1);
+                        pa_x.add(x);
+                        pa_x.add(x + 1);
+                        pa_y.add(y - 3 - i);
+                        pa_y.add(y - 3 - i);
+                        pa_y.add(y - 3 - i);
+                    }
 
-                break;
-            default:
-                break;
+                    break;
+                case 5://左下
+                    pa_x.add(x - 1);
+                    pa_x.add(x);
+                    pa_x.add(x + 1);
+                    pa_x.add(x - 1);
+                    pa_x.add(x - 1);
+                    pa_x.add(x);
+                    pa_x.add(x - 2);
+                    pa_x.add(x - 2);
+                    pa_x.add(x - 1);
+
+                    pa_y.add(y + 1);
+                    pa_y.add(y);
+                    pa_y.add(y - 1);
+                    pa_y.add(y);
+                    pa_y.add(y - 1);
+                    pa_y.add(y - 1);
+                    pa_y.add(y - 1);
+                    pa_y.add(y - 2);
+                    pa_y.add(y - 2);
+
+                    for (int i = 0; i < Main.location_registration_area_extent; i++) {
+                        pa_x.add(x - 3 - i);
+                        pa_x.add(x - 3 - i);
+                        pa_x.add(x - 2 - i);
+                        pa_y.add(y - 2 - i);
+                        pa_y.add(y - 3 - i);
+                        pa_y.add(y - 3 - i);
+                    }
+
+                    break;
+                case 6://左
+                    pa_x.add(x);
+                    pa_x.add(x);
+                    pa_x.add(x);
+                    pa_x.add(x - 1);
+                    pa_x.add(x - 1);
+                    pa_x.add(x - 1);
+                    pa_x.add(x - 2);
+                    pa_x.add(x - 2);
+                    pa_x.add(x - 2);
+
+                    pa_y.add(y + 1);
+                    pa_y.add(y);
+                    pa_y.add(y - 1);
+                    pa_y.add(y + 1);
+                    pa_y.add(y);
+                    pa_y.add(y - 1);
+                    pa_y.add(y + 1);
+                    pa_y.add(y);
+                    pa_y.add(y - 1);
+
+
+                    for (int i = 0; i < Main.location_registration_area_extent; i++) {
+                        pa_x.add(x - 3 - i);
+                        pa_x.add(x - 3 - i);
+                        pa_x.add(x - 3 - i);
+                        pa_y.add(y + 1);
+                        pa_y.add(y);
+                        pa_y.add(y - 1);
+                    }
+
+                    break;
+                case 7://左上
+                    pa_x.add(x - 1);
+                    pa_x.add(x);
+                    pa_x.add(x + 1);
+                    pa_x.add(x - 1);
+                    pa_x.add(x - 1);
+                    pa_x.add(x);
+                    pa_x.add(x - 2);
+                    pa_x.add(x - 2);
+                    pa_x.add(x - 1);
+
+                    pa_y.add(y - 1);
+                    pa_y.add(y);
+                    pa_y.add(y + 1);
+                    pa_y.add(y);
+                    pa_y.add(y + 1);
+                    pa_y.add(y + 1);
+                    pa_y.add(y + 1);
+                    pa_y.add(y + 2);
+                    pa_y.add(y + 2);
+
+
+                    for (int i = 0; i < Main.location_registration_area_extent; i++) {
+                        pa_x.add(x - 3 - i);
+                        pa_x.add(x - 3 - i);
+                        pa_x.add(x - 2 - i);
+                        pa_y.add(y + 2 + i);
+                        pa_y.add(y + 3 + i);
+                        pa_y.add(y + 3 + i);
+                    }
+
+                    break;
+                default:
+                    break;
+            }
+
         }
 
 
@@ -210,8 +341,10 @@ public class PagingArea {
 
             if (mn_exist_column == 1 && mn_exist_row == 1){
                 Main.paging_cell_num += Main.C_paging_33[0];
+                Main.paging_delay++;
             }else{
                 Main.paging_cell_num += Main.C_paging_33[1];
+                Main.paging_delay += 2;
             }
 
         }else {
@@ -225,21 +358,25 @@ public class PagingArea {
         *
         * */
 
-            switch (Main.paging_area_extent) {
+            switch (Main.location_registration_area_extent) {
                 case 0:
 
                     if (mn_exist_row == 1) {
                         Main.paging_cell_num += Main.C_proposed_paging_33[0];
+                        Main.paging_delay++;
                     } else {
                         Main.paging_cell_num += Main.C_proposed_paging_33[1];
+                        Main.paging_delay += 2;
                     }
                     break;
                 case 1:
 
-                    if (mn_exist_row >= 1 && mn_exist_row <= 2) {
+                    if (mn_exist_row == 1 || mn_exist_row == 2) {
                         Main.paging_cell_num += Main.C_proposed_paging_34[0];
+                        Main.paging_delay++;
                     } else {
                         Main.paging_cell_num += Main.C_proposed_paging_34[1];
+                        Main.paging_delay += 2;
                     }
 
                     break;
@@ -247,10 +384,13 @@ public class PagingArea {
 
                     if (mn_exist_row == 2) {
                         Main.paging_cell_num += Main.C_proposed_paging_35[0];
+                        Main.paging_delay++;
                     } else if (mn_exist_row == 1 || mn_exist_row == 3) {
                         Main.paging_cell_num += Main.C_proposed_paging_35[1];
+                        Main.paging_delay += 2;
                     } else {
                         Main.paging_cell_num += Main.C_proposed_paging_35[2];
+                        Main.paging_delay += 3;
                     }
 
                     break;
@@ -302,15 +442,22 @@ public class PagingArea {
         int column = 0;
 
         for (int i = 0; i < pa_x.size(); i++) {
+
             if(pa_x.get(i) == x && pa_y.get(i) == y){
+
                 row = i / 3;
                 column = i % 3;
-                System.out.println(" mn_exist row:"+row+" i:"+i);
+
+//                System.out.println("i :"+i);
+//                System.out.println("row :"+row);
+//                System.out.println("column :"+column);
+
                 break;
             }
         }
 
         int[] retval = {row,column};
+
 
         return retval;
     }
