@@ -7,7 +7,7 @@ import java.util.List;
  */
 public class Main {
 
-    static final int SimuCount = 1;
+    static final int SimuCount = 1000;
 
     //フィールドの範囲
     static final int fieldx = 200;
@@ -151,7 +151,7 @@ public class Main {
 
             br.close();
 
-            if (paramList.size() == 5){
+            if (paramList.size() == 10){
                 setParam(paramList);
             }
 
@@ -164,19 +164,19 @@ public class Main {
 
     private static void setParam(List<String> list) {
 
-        SimuTime = (int) (Float.parseFloat(list.get(0)) * 3600);
+        SimuTime = (int) (Float.parseFloat(list.get(1)) * 3600);
 
-        float bs_radius = Float.parseFloat(list.get(1));
+        float bs_radius = Float.parseFloat(list.get(3));
 
 
         mn_bs_stay_time = (int)((bs_radius/35) * 3600);
 
 
-        location_registration_area_extent = Integer.parseInt(list.get(2));
+        location_registration_area_extent = Integer.parseInt(list.get(5));
 
-        movement_model_num = Integer.parseInt(list.get(3));
+        movement_model_num = Integer.parseInt(list.get(7));
 
-        lambda = Integer.parseInt(list.get(4));
+        lambda = Integer.parseInt(list.get(9));
 
 
 //        System.out.println("SimuTime =                          " + SimuTime);

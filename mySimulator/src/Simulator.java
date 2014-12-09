@@ -59,8 +59,6 @@ public class Simulator {
         //目的地方向を設定
         int dest_direction = makeMNDirection();
 
-
-
         MN_state mn_state;
 
         CalcCost_MN ccmn = new CalcCost_MN(initial_x,initial_y,mn.movement_model_num,dest_direction);

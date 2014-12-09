@@ -27,6 +27,8 @@ public class MN_movement {
     int[] not_move_direction_array;
 
 
+    int randomWayPointcount = 0;
+
     public MN_movement(int movement_model_num,int dest_direction) {
 
         this.movement_model_num = movement_model_num;
@@ -112,12 +114,19 @@ public class MN_movement {
     //進行方向をランダムにする
     public void set_direction_random(){
 
+        if(randomWayPointcount == 0) {
+
+
+            randomWayPointcount = ran.nextInt(10);
             direction_num = ran.nextInt(8);
 
-            for(int i = 0;i< direction_prbability_array.length;i++){
-                if(direction_num == i) direction_prbability_array[i] = 1;
+            for (int i = 0; i < direction_prbability_array.length; i++) {
+                if (direction_num == i) direction_prbability_array[i] = 1;
                 else direction_prbability_array[i] = 0;
             }
+
+        }
+
     }
 
     public void set_fixed_direction(){
@@ -151,11 +160,13 @@ public class MN_movement {
 
     public int move(){
 
+        if (randomWayPointcount >= 1){
+            randomWayPointcount--;
+        }
+
         int z = ran.nextInt(100);
         double total = 0;
         int i=0;
-
-//        System.out.println("z:"+z);
 
         do{
             total += (direction_prbability_array[i++]*100);
@@ -165,6 +176,7 @@ public class MN_movement {
         direction_num = i-1;
 
         return direction_num;
+
     }
 
     //フィールドの端にいる場合に向きを変えるかどうかの判定
