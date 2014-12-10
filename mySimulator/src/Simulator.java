@@ -61,7 +61,7 @@ public class Simulator {
 
         MN_state mn_state;
 
-        CalcCost_MN ccmn = new CalcCost_MN(initial_x,initial_y,mn.movement_model_num,dest_direction);
+        CalcCost_MN ccmn = new CalcCost_MN(initial_x,initial_y,mn.movement_model_num,Main.location_registration_num,dest_direction);
 
         field.initial_mn_reg(initial_x,initial_y);
 

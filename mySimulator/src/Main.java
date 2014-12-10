@@ -116,6 +116,11 @@ public class Main {
     *             2:二地点最短
     *             3:二地点迂回
     *
+    * ページングエリア作成方法
+    *
+    *            1: 3 * 3
+    *            2: 提案手法
+    *
     * 一時間あたりの平均通信回数のλ
     *              1,2,3
     *
@@ -151,7 +156,7 @@ public class Main {
 
             br.close();
 
-            if (paramList.size() == 10){
+            if (paramList.size() == 12){
                 setParam(paramList);
             }
 
@@ -171,20 +176,13 @@ public class Main {
 
         mn_bs_stay_time = (int)((bs_radius/35) * 3600);
 
-
         location_registration_area_extent = Integer.parseInt(list.get(5));
 
         movement_model_num = Integer.parseInt(list.get(7));
 
-        lambda = Integer.parseInt(list.get(9));
+        location_registration_num = Integer.parseInt(list.get(9));
 
-
-//        System.out.println("SimuTime =                          " + SimuTime);
-//        System.out.println("mn_bs_stay_time =                   " + mn_bs_stay_time);
-//        System.out.println("location_registration_area_extent = " + location_registration_area_extent);
-//        System.out.println("movement_model_num =                " + movement_model_num);
-//        System.out.println("lambda =                            " + lambda);
-//        System.out.println();
+        lambda = Integer.parseInt(list.get(11));
 
     }
 

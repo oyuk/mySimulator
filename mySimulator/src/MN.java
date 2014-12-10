@@ -17,7 +17,7 @@ public class MN {
 
     int active_timer;
 
-    MN_movement mn_movement;
+    MN_Movement mn_movement;
 
     Random random;
 
@@ -50,9 +50,11 @@ public class MN {
         this.movement_model_num = movement_model_num;
         this.dest_direction = dest_direction;
 
-        System.out.println("MN dest_directoin : "+ this.dest_direction);
+        if (movement_model_num != 1) {
+            System.out.println("MN dest_directoin : " + this.dest_direction);
+        }
 
-        mn_movement = new MN_movement(movement_model_num,dest_direction);
+        mn_movement = new MN_Movement(movement_model_num,dest_direction);
 
         intervalList = calc_interval_time();
 

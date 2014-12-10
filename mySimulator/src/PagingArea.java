@@ -10,13 +10,7 @@ public class PagingArea {
     int pa_move_count;//PAを移動した回数
 
 
-    /*
-   * 移動モデルの番号
-   * 1:ランダム
-   * 2:二地点最短
-   * 3:二地点迂回
-   */
-    int movement_model_num;
+    int location_legistration_model_num;
 
     /*目的地方向
     * 移動モデルが2,3の場合に使用
@@ -24,13 +18,13 @@ public class PagingArea {
     int dest_direction;
 
 
-    public PagingArea(int movement_model_num,int dest_direction) {
+    public PagingArea(int location_legistration_model_num,int dest_direction) {
         pa_x = new ArrayList<Integer>();
         pa_y = new ArrayList<Integer>();
         pa_move_count = 0;
 
         this.dest_direction = dest_direction;
-        this.movement_model_num = movement_model_num;
+        this.location_legistration_model_num = location_legistration_model_num;
     }
 
     /*ページングエリアの設定。
@@ -39,7 +33,7 @@ public class PagingArea {
     public void set_PA(int x,int y){
 
 //        現在の座標の周辺を追加
-        if (movement_model_num <= 1) {
+        if (location_legistration_model_num <= 1) {
             pa_x.add(x - 1);
             pa_x.add(x);
             pa_x.add(x + 1);
@@ -337,7 +331,7 @@ public class PagingArea {
         int mn_exist_column = tmp[1];
 
 
-        if (movement_model_num <= 1){
+        if (location_legistration_model_num <= 1){
 
             if (mn_exist_column == 1 && mn_exist_row == 1){
                 Main.paging_cell_num += Main.C_paging_33[0];
@@ -368,6 +362,7 @@ public class PagingArea {
                         Main.paging_cell_num += Main.C_proposed_paging_33[1];
                         Main.paging_delay += 2;
                     }
+
                     break;
                 case 1:
 

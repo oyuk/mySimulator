@@ -28,7 +28,7 @@ public class MN {
 
 
     Field field;
-    MN_movement mn_move;
+    MN_Movement mn_move;
     PagingArea pa;
     Random ran;
 
@@ -45,7 +45,7 @@ public class MN {
 
 
 
-        mn_move = new MN_movement(move_dir);
+        mn_move = new MN_Movement(move_dir);
         move_dire_count = new int[8];
         pa = new PagingArea();
         pa.set_PA(move_dir,x,y,stay_time);

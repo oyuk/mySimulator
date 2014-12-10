@@ -21,6 +21,15 @@ public class CalcCost_MN {
     */
     int movement_model_num;
 
+
+    /*
+ * ページングモデルの番号
+ * 1:3*3
+ * 2:提案手法
+ */
+    int location_legistration_model_num;
+
+
     /*目的地方向
     * 移動モデルが2,3の場合に使用
     * */
@@ -29,15 +38,16 @@ public class CalcCost_MN {
 
     Random random;
 
-    public CalcCost_MN(int x, int y,int movement_model_num,int dest_direction){
+    public CalcCost_MN(int x, int y,int movement_model_num,int location_legistration_model_num,int dest_direction){
 
         this.x = x;
         this.y = y;
 
         this.dest_direction = dest_direction;
-        this.movement_model_num = movement_model_num;
+//        this.movement_model_num = movement_model_num;
+        this.location_legistration_model_num = location_legistration_model_num;
 
-        pagingArea = new PagingArea(movement_model_num,dest_direction);
+        pagingArea = new PagingArea(location_legistration_model_num,dest_direction);
         pagingArea.set_PA(this.x, this.y);
         field = Field.getInstance();
 
@@ -67,7 +77,7 @@ public class CalcCost_MN {
 
             detach_bs();
 
-            if(movement_model_num != 1) {
+            if(location_legistration_model_num != 1) {
                 checkMoveDirectionisCorrect(x, y);
             }
 
@@ -149,7 +159,7 @@ public class CalcCost_MN {
 
 
         if(is_movement_model_change) {
-            this.movement_model_num = pagingArea.movement_model_num = 1;
+            this.location_legistration_model_num = pagingArea.location_legistration_model_num =1;
             Main.detour_count++;
 
             System.out.println("-------------------------------");

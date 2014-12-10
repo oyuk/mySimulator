@@ -3,7 +3,7 @@ import java.util.Random;
 /**
  * Created by oky on 14/11/27.
  */
-public class MN_movement {
+public class MN_Movement {
 
     /*方向は右回りに8つか、ランダムの9通り*/
     int direction_num;
@@ -29,7 +29,7 @@ public class MN_movement {
 
     int randomWayPointcount = 0;
 
-    public MN_movement(int movement_model_num,int dest_direction) {
+    public MN_Movement(int movement_model_num, int dest_direction) {
 
         this.movement_model_num = movement_model_num;
         direction_num = this.dest_direction = dest_direction;
