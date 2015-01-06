@@ -41,6 +41,7 @@ public class Main {
 
 
     final static int[] C_paging_33 = {1,9};
+    final static int[] C_paging_55 = {1,9,25};
 
     final static int[] C_proposed_paging_33 = {3,9};
     final static int[] C_proposed_paging_34 = {6,12};

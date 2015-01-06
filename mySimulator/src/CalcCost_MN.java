@@ -1,5 +1,3 @@
-import sun.misc.resources.Messages_it;
-
 import java.util.Random;
 
 /**
@@ -78,7 +76,7 @@ public class CalcCost_MN {
             detach_bs();
 
             if(location_legistration_model_num != 1) {
-                checkMoveDirectionisCorrect(x, y);
+                checkMoveDirectionIsCorrect(x, y);
             }
 
             this.x = x;
@@ -91,7 +89,7 @@ public class CalcCost_MN {
 
 
 
-    void checkMoveDirectionisCorrect(int after_x,int after_y){
+    void checkMoveDirectionIsCorrect(int after_x, int after_y){
 
         int diff_x = after_x - this.x;
         int diff_y = after_y - this.y;
