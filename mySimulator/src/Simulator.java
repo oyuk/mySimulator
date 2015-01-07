@@ -61,7 +61,7 @@ public class Simulator {
 
         MN_state mn_state;
 
-        CalcCost_MN ccmn = new CalcCost_MN(initial_x,initial_y,mn.movement_model_num,Main.location_registration_num,dest_direction);
+        CalcCost_MN ccmn = new CalcCost_MN(initial_x,initial_y,mn.movement_model_num,Main.location_registration_model_num,dest_direction);
 
         field.initial_mn_reg(initial_x,initial_y);
 
@@ -163,7 +163,7 @@ public class Simulator {
         System.out.println("\nAVERAGE\n");
 
 
-        System.out.println("location_registration_num = " + (double)Main.location_registration_num/Main.SimuCount);
+        System.out.println("location_registration_num = " + (double)Main.location_registration_num /Main.SimuCount);
         System.out.println("pagingarea_move_num       = " + (double)Main.pagingarea_move_num/Main.SimuCount);
         System.out.println("paging_num                = " + (double)Main.paging_num/Main.SimuCount);
 

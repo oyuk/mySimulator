@@ -34,6 +34,8 @@ public class PagingArea {
 
 //        現在の座標の周辺を追加
         if (location_legistration_model_num <= 1) {
+
+            // 3 * 3
             pa_x.add(x - 1);
             pa_x.add(x);
             pa_x.add(x + 1);
@@ -53,6 +55,47 @@ public class PagingArea {
             pa_y.add(y + 1);
             pa_y.add(y + 1);
             pa_y.add(y + 1);
+
+            // 5*5
+            if (location_legistration_model_num == 0) {
+                pa_x.add(x-2);
+                pa_x.add(x-1);
+                pa_x.add(x);
+                pa_x.add(x+1);
+                pa_x.add(x+2);
+
+                pa_x.add(x-2);
+                pa_x.add(x+2);
+                pa_x.add(x-2);
+                pa_x.add(x+2);
+                pa_x.add(x-2);
+                pa_x.add(x+2);
+
+                pa_x.add(x-2);
+                pa_x.add(x-1);
+                pa_x.add(x);
+                pa_x.add(x+1);
+                pa_x.add(x+2);
+
+                pa_y.add(y+2);
+                pa_y.add(y+2);
+                pa_y.add(y+2);
+                pa_y.add(y+2);
+                pa_y.add(y+2);
+
+                pa_y.add(y+1);
+                pa_y.add(y+1);
+                pa_y.add(y);
+                pa_y.add(y);
+                pa_y.add(y-1);
+                pa_y.add(y-1);
+
+                pa_y.add(y-2);
+                pa_y.add(y-2);
+                pa_y.add(y-2);
+                pa_y.add(y-2);
+                pa_y.add(y-2);
+            }
 
         }else {
 
@@ -331,7 +374,21 @@ public class PagingArea {
         int mn_exist_column = tmp[1];
 
 
-        if (location_legistration_model_num <= 1){
+        if (location_legistration_model_num == 0) {
+
+            if (mn_exist_column == 2 && mn_exist_row == 2){
+                Main.paging_cell_num += Main.C_paging_55[0];
+                Main.paging_delay++;
+            }else if (mn_exist_column <= 3 && mn_exist_column >= 1 && mn_exist_row <= 3 && mn_exist_row >= 1){
+                Main.paging_cell_num += Main.C_paging_55[1];
+                Main.paging_delay += 2;
+            }else {
+                Main.paging_cell_num += Main.C_paging_55[2];
+                Main.paging_delay += 3;
+            }
+
+
+        }else if (location_legistration_model_num == 1){
 
             if (mn_exist_column == 1 && mn_exist_row == 1){
                 Main.paging_cell_num += Main.C_paging_33[0];
@@ -340,6 +397,7 @@ public class PagingArea {
                 Main.paging_cell_num += Main.C_paging_33[1];
                 Main.paging_delay += 2;
             }
+
 
         }else {
 

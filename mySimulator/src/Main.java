@@ -55,6 +55,9 @@ public class Main {
     /*BS locationupadte*/
     static int location_registration_num = 0;
 
+    //位置登録エリアのモデル
+    static int location_registration_model_num = 0;
+
     /*ページングエリアを移動した回数*/
     /*CalcCost_MN attachbs*/
     static int pagingarea_move_num = 0;
@@ -119,12 +122,16 @@ public class Main {
     *
     * ページングエリア作成方法
     *
-    *            1: 3 * 3
+    *            0: 5 * 5 (既存手法)
+    *            1: 3 * 3 (既存主砲)
     *            2: 提案手法
     *
     * 一時間あたりの平均通信回数のλ
     *              1,2,3
     *
+    *
+    * 位置登録エリアの大きさはページングエリア作成手法が
+    * 2の場合のみ使われるパラメータ
     *
     * */
 
@@ -174,14 +181,13 @@ public class Main {
 
         float bs_radius = Float.parseFloat(list.get(3));
 
-
         mn_bs_stay_time = (int)((bs_radius/35) * 3600);
 
         location_registration_area_extent = Integer.parseInt(list.get(5));
 
         movement_model_num = Integer.parseInt(list.get(7));
 
-        location_registration_num = Integer.parseInt(list.get(9));
+        location_registration_model_num = Integer.parseInt(list.get(9));
 
         lambda = Integer.parseInt(list.get(11));
 
