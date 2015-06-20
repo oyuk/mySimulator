@@ -5,6 +5,21 @@ import java.util.List;
 /**
  * Created by oky on 14/11/26.
  */
+
+enum location_registration_model{
+    exist5_5(0),exist3_3(1),proposal(2);
+
+    private final int num;
+
+    private location_registration_model(final int num){
+        this.num = num;
+    }
+
+    public int getNum(){
+        return num;
+    }
+}
+
 public class Main {
 
     static final int SimuCount = 1000;
@@ -43,13 +58,12 @@ public class Main {
     final static int[] C_paging_33 = {1,9};
     final static int[] C_paging_55 = {1,9,25};
 
-    final static int[] C_proposed_paging_33 = {3,9};
+    final static int[] C_proposed_paging_33 = {1,9};
     final static int[] C_proposed_paging_34 = {6,12};
     final static int[] C_proposed_paging_35 = {3,9,15};
 
     //位置登録エリアの大きさ
     static int location_registration_area_extent;
-
 
     /*位置登録をした回数*/
     /*BS locationupadte*/
@@ -123,7 +137,7 @@ public class Main {
     * ページングエリア作成方法
     *
     *            0: 5 * 5 (既存手法)
-    *            1: 3 * 3 (既存主砲)
+    *            1: 3 * 3 (既存手法)
     *            2: 提案手法
     *
     * 一時間あたりの平均通信回数のλ
@@ -190,8 +204,6 @@ public class Main {
         location_registration_model_num = Integer.parseInt(list.get(9));
 
         lambda = Integer.parseInt(list.get(11));
-
     }
-
 
 }

@@ -72,27 +72,15 @@ public class CalcCost_MN {
         this.isActive = isActive;
 
         if (this.x != x || this.y != y) {
-
             detach_bs();
-
-            if(location_legistration_model_num != 1) {
-                checkMoveDirectionIsCorrect(x, y);
-            }
-
-            this.x = x;
-            this.y = y;
-
-            attach_bs();
-
+            attach_bs(x,y);
         }
     }
 
+    void checkMoveDirectionIsCorrect(int new_x, int new_y){
 
-
-    void checkMoveDirectionIsCorrect(int after_x, int after_y){
-
-        int diff_x = after_x - this.x;
-        int diff_y = after_y - this.y;
+        int diff_x = new_x - this.x;
+        int diff_y = new_y - this.y;
 
         boolean is_movement_model_change = false;
 
@@ -157,13 +145,13 @@ public class CalcCost_MN {
 
 
         if(is_movement_model_change) {
-            this.location_legistration_model_num = pagingArea.location_legistration_model_num =1;
+            this.location_legistration_model_num = pagingArea.location_legistration_model_num = location_registration_model.exist3_3.getNum();
             Main.detour_count++;
 
             System.out.println("-------------------------------");
             System.out.println("|     movement_model_change   |");
             System.out.println("-------------------------------");
-            System.out.println("("+this.x+","+this.y+")->("+after_x+","+after_y+")");
+            System.out.println("("+this.x+","+this.y+")->("+new_x+","+new_y+")");
             System.out.println("diff_x = " + diff_x);
             System.out.println("diff_y = " + diff_y);
         }
@@ -178,16 +166,22 @@ public class CalcCost_MN {
     }
 
     //MAGにattachした際の処理
-    void attach_bs() {
-
+    void attach_bs(int new_x,int new_y) {       
         //PAを移動しているかの判定
-        if(!pagingArea.check(x, y)){//PAを移動した場合
+        if(!pagingArea.check(new_x,new_y)){//PAを移動した場合
+            if(location_legistration_model_num == location_registration_model.proposal.getNum()) {
+                checkMoveDirectionIsCorrect(new_x,new_y);
+            }
             pagingArea.pa_x.clear();
             pagingArea.pa_y.clear();
+            this.x = new_x;
+            this.y = new_y;
             pagingArea.set_PA(x,y);
             Main.pagingarea_move_num++;
             field.reg_bs(x, y,true,isActive);
         }else{
+            this.x = new_x;
+            this.y = new_y;
             field.reg_bs(x, y,false,isActive);
         }
     }

@@ -33,7 +33,7 @@ public class PagingArea {
     public void set_PA(int x,int y){
 
 //        現在の座標の周辺を追加
-        if (location_legistration_model_num <= 1) {
+        if (location_legistration_model_num <= location_registration_model.exist3_3.getNum()) {
 
             // 3 * 3
             pa_x.add(x - 1);
@@ -57,7 +57,7 @@ public class PagingArea {
             pa_y.add(y + 1);
 
             // 5*5
-            if (location_legistration_model_num == 0) {
+            if (location_legistration_model_num == location_registration_model.exist5_5.getNum()) {
                 pa_x.add(x-2);
                 pa_x.add(x-1);
                 pa_x.add(x);
@@ -374,7 +374,7 @@ public class PagingArea {
         int mn_exist_column = tmp[1];
 
 
-        if (location_legistration_model_num == 0) {
+        if (location_legistration_model_num == location_registration_model.exist5_5.getNum()) {
 
             if (mn_exist_column == 2 && mn_exist_row == 2){
                 Main.paging_cell_num += Main.C_paging_55[0];
@@ -388,7 +388,7 @@ public class PagingArea {
             }
 
 
-        }else if (location_legistration_model_num == 1){
+        }else if (location_legistration_model_num == location_registration_model.exist3_3.getNum()){
 
             if (mn_exist_column == 1 && mn_exist_row == 1){
                 Main.paging_cell_num += Main.C_paging_33[0];
@@ -413,7 +413,7 @@ public class PagingArea {
             switch (Main.location_registration_area_extent) {
                 case 0:
 
-                    if (mn_exist_row == 1) {
+                    if (mn_exist_row == 1 && mn_exist_column == 1) {
                         Main.paging_cell_num += Main.C_proposed_paging_33[0];
                         Main.paging_delay++;
                     } else {
