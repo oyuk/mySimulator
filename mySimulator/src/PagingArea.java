@@ -501,16 +501,11 @@ public class PagingArea {
                 row = i / 3;
                 column = i % 3;
 
-//                System.out.println("i :"+i);
-//                System.out.println("row :"+row);
-//                System.out.println("column :"+column);
-
                 break;
             }
         }
 
         int[] retval = {row,column};
-
 
         return retval;
     }

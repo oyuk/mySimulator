@@ -1,3 +1,6 @@
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.Random;
 
 /**
@@ -141,42 +144,78 @@ public class Simulator {
 
     private void showResult(){
 
-        System.out.println("\nPARAM\n");
+        String result = "";
 
-        System.out.println("SimuTime                          = " + Main.SimuTime);
-        System.out.println("mn_bs_stay_time                   = " + Main.mn_bs_stay_time);
-        System.out.println("location_registration_area_extent = " + Main.location_registration_area_extent);
-        System.out.println("movement_model_num                = " + Main.movement_model_num);
-        System.out.println("lambda                            = " + Main.lambda);
+        result +="\nPARAM\n\n";
 
-
-        System.out.println("\nTOTAL\n");
-
-        System.out.println("location_registration_num = " + Main.location_registration_num);
-        System.out.println("pagingarea_move_num       = " + Main.pagingarea_move_num);
-        System.out.println("paging_num                = "+Main.paging_num);
-        System.out.println("paging_cell_num           = "+Main.paging_cell_num);
-        System.out.println("paging_delay              = "+Main.paging_delay);
-        System.out.println("move_count                = " + Main.move_count);
-        System.out.println("detour_count                = " + Main.detour_count);
-
-        System.out.println("\nAVERAGE\n");
+        result +="SimuTime                          = " + Main.SimuTime + "\n";
+        result +="mn_bs_stay_time                   = " + Main.mn_bs_stay_time + "\n";
+        result +="location_registration_area_extent = " + Main.location_registration_area_extent + "\n";
+        result +="movement_model_num                = " + Main.movement_model_num + "\n";
+        result +="lambda                            = " + Main.lambda + "\n";
 
 
-        System.out.println("location_registration_num = " + (double)Main.location_registration_num /Main.SimuCount);
-        System.out.println("pagingarea_move_num       = " + (double)Main.pagingarea_move_num/Main.SimuCount);
-        System.out.println("paging_num                = " + (double)Main.paging_num/Main.SimuCount);
+//        result +="\nTOTAL\n\n";
+//
+//        result +="location_registration_num = " + Main.location_registration_num + "\n";
+//        result +="pagingarea_move_num       = " + Main.pagingarea_move_num + "\n";
+//        result +="paging_num                = "+Main.paging_num + "\n";
+//        result +="paging_cell_num           = "+Main.paging_cell_num + "\n";
+//        result +="paging_delay              = "+Main.paging_delay + "\n";
+//        result +="move_count                = " + Main.move_count + "\n";
+//        result +="detour_count              = " + Main.detour_count + "\n";
+
+        result +="\nAVERAGE\n\n";
+
+        result +="location_registration_num = " + (double)Main.location_registration_num /Main.SimuCount + "\n";
+        result +="pagingarea_move_num       = " + (double)Main.pagingarea_move_num/Main.SimuCount + "\n";
+        result +="paging_num                = " + (double)Main.paging_num/Main.SimuCount + "\n";
 
         if(Main.paging_num >= 1) {
-            System.out.println("paging_delay              = " + (double)Main.paging_delay / Main.paging_num);
-            System.out.println("paging_cell_num           = " + (double)Main.paging_cell_num / Main.paging_num);
+            result +="paging_delay              = " + String.format("%.3f",(double)Main.paging_delay / Main.paging_num) + "\n";
+            result +="paging_cell_num           = " + String.format("%.3f",(double)Main.paging_cell_num / Main.paging_num) + "\n";
         }else{
-            System.out.println("paging_delay              = 0");
-            System.out.println("paging_cell_num           = 0");
+            result +="paging_delay              = 0" + "\n";
+            result +="paging_cell_num           = 0" + "\n";
         }
 
-        System.out.println("move_count                = " + Main.move_count/Main.SimuCount);
-        System.out.println("detour_count_rate         = " + (double)Main.detour_count/Main.SimuCount);
+        result +="move_count                = " + Main.move_count/Main.SimuCount + "\n";
+        result +="detour_count_rate         = " + (double)Main.detour_count/Main.SimuCount + "\n";
+
+        result +="filepath                  = " + Main.filePath + "\n";
+        System.out.println(result);
+        writeResultToFile(result);
+    }
+
+    private void writeResultToFile(String result){
+        int index = Main.filePath.indexOf(".txt");
+        String extractString = Main.filePath.substring(0,index);
+        String writeFilePath = extractString + "_result.txt";
+
+        // 出力したいファイル名を指定してFileオブジェクトを生成します。
+        File file = new File(writeFilePath);
+
+        FileWriter filewriter = null;
+        try{
+            filewriter = new FileWriter(file);
+
+            // ここでファイルに文字を書き込みます。
+            filewriter.write(result);
+            System.out.println("write file ->" + writeFilePath);
+
+        }catch(IOException e){
+            System.out.println(e);
+        } finally {
+            // クローズ処理（成功・失敗に関わらず必ずクローズします。）
+            // クローズ漏れはバグのもとになります。必ずfinally句でクローズしましょう。
+            if (filewriter != null) {
+                try {
+                    filewriter.close();
+                } catch (IOException e) {
+                    System.out.println(e);
+                }
+            }
+        }
 
     }
 }
